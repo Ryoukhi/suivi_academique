@@ -191,3 +191,67 @@ Action:
 
 Update your application's configuration
 
+2025-12-18 15:30:59.542 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.eadl.suivi_academique.config.JwtAuthenticationFilter required a bean of type 'com.eadl.suivi_academique.config.JwtUtil' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.eadl.suivi_academique.config.JwtUtil' in your configuration.
+
+2025-12-18 15:31:32.286 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'server.port' to java.lang.Integer:
+
+    Property: server.port
+    Value: "${SERVER_PORT}"
+    Origin: class path resource [application-dev.yml] - 2:9
+    Reason: failed to convert java.lang.String to java.lang.Integer (caused by java.lang.NumberFormatException: For input string: "${SERVER_PORT}")
+
+Action:
+
+Update your application's configuration
+
+2025-12-18 15:38:22.421 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.eadl.suivi_academique.config.JwtAuthenticationFilter required a bean of type 'com.eadl.suivi_academique.config.JwtUtil' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.eadl.suivi_academique.config.JwtUtil' in your configuration.
+
+2025-12-18 15:39:39.308 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.eadl.suivi_academique.config.JwtAuthenticationFilter required a bean of type 'com.eadl.suivi_academique.config.JwtUtil' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.eadl.suivi_academique.config.JwtUtil' in your configuration.
+

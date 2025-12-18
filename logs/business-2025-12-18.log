@@ -1,0 +1,23 @@
+2025-12-18 15:30:50.383 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 8016 (started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-18 15:30:50.407 INFO  - The following 1 profile is active: "dev"
+2025-12-18 15:31:03.364 INFO  - Tentative de création d'une nouvelle salle par l'utilisateur "admin" | ip: 127.0.0.1 | device: JUnit-Test  - code: null, libellé: Salle Informatique
+2025-12-18 15:31:03.368 ERROR - Création salle échouée - Code salle manquant
+2025-12-18 15:31:03.383 WARN  - Validation échouée lors de la création de la salle: Le code de la salle est obligatoire
+2025-12-18 15:31:03.481 INFO  - Tentative de création d'une nouvelle salle par l'utilisateur "admin" | ip: 127.0.0.1 | device: JUnit-Test  - code: S001, libellé: Salle Informatique
+2025-12-18 15:31:03.487 INFO  - Salle créée avec succès - code: S001, libellé: Salle Informatique, contenance: 30, statut: LIBRE
+2025-12-18 15:38:06.699 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 14740 (started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-18 15:38:06.702 INFO  - The following 1 profile is active: "test"
+2025-12-18 15:39:26.956 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 3504 (started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-18 15:39:26.960 INFO  - The following 1 profile is active: "test"
+2025-12-18 15:43:23.044 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 8896 (started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-18 15:43:23.051 INFO  - The following 1 profile is active: "test"
+2025-12-18 15:43:41.991 INFO  - Started SalleControllerTest in 22.181 seconds (process running for 28.733)
+2025-12-18 15:44:06.009 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 14928 (started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-18 15:44:06.015 INFO  - The following 1 profile is active: "test"
+2025-12-18 15:44:24.847 INFO  - Started SalleControllerTest in 21.891 seconds (process running for 26.488)
+2025-12-18 15:45:11.259 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 18844 (started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-18 15:45:11.290 INFO  - The following 1 profile is active: "test"
+2025-12-18 15:45:32.495 INFO  - Started SalleControllerTest in 24.32 seconds (process running for 28.884)
+2025-12-18 15:46:38.655 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 6580 (started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-18 15:46:38.660 INFO  - The following 1 profile is active: "test"
+2025-12-18 15:46:59.877 INFO  - Started SalleControllerTest in 24.74 seconds (process running for 29.256)

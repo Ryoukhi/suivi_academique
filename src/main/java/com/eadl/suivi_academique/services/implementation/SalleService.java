@@ -8,10 +8,10 @@ import com.eadl.suivi_academique.config.CurrentUserProvider;
 import com.eadl.suivi_academique.config.RequestContextProvider;
 import com.eadl.suivi_academique.dto.SalleDTO;
 import com.eadl.suivi_academique.entities.Salle;
+import com.eadl.suivi_academique.exceptions.salleexception.InvalidSalleException;
+import com.eadl.suivi_academique.exceptions.salleexception.SalleNotFoundException;
 import com.eadl.suivi_academique.mappers.SalleMapper;
 import com.eadl.suivi_academique.repositories.SalleRepository;
-import com.eadl.suivi_academique.services.exceptions.salleexception.InvalidSalleException;
-import com.eadl.suivi_academique.services.exceptions.salleexception.SalleNotFoundException;
 import com.eadl.suivi_academique.services.interfaces.SalleInterface;
 import com.eadl.suivi_academique.utils.SalleStatus;
 

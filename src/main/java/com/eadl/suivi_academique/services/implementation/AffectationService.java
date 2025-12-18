@@ -9,15 +9,15 @@ import com.eadl.suivi_academique.entities.Affectation;
 import com.eadl.suivi_academique.entities.AffectationId;
 import com.eadl.suivi_academique.entities.Cours;
 import com.eadl.suivi_academique.entities.Personnel;
+import com.eadl.suivi_academique.exceptions.affectationexception.AffectationNotFoundException;
+import com.eadl.suivi_academique.exceptions.coursexception.CoursNotFoundException;
+import com.eadl.suivi_academique.exceptions.personnelexception.PersonnelNotFoundException;
 import com.eadl.suivi_academique.mappers.AffectationMapper;
 import com.eadl.suivi_academique.mappers.CoursMapper;
 import com.eadl.suivi_academique.mappers.PersonnelMapper;
 import com.eadl.suivi_academique.repositories.AffectationRepository;
 import com.eadl.suivi_academique.repositories.CoursRepository;
 import com.eadl.suivi_academique.repositories.PersonnelRepository;
-import com.eadl.suivi_academique.services.exceptions.affectationexception.AffectationNotFoundException;
-import com.eadl.suivi_academique.services.exceptions.coursexception.CoursNotFoundException;
-import com.eadl.suivi_academique.services.exceptions.personnelexception.PersonnelNotFoundException;
 import com.eadl.suivi_academique.services.interfaces.AffectationInterface;
 
 import lombok.RequiredArgsConstructor;

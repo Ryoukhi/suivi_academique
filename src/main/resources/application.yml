@@ -2,7 +2,7 @@ spring:
   application:
     name: suivi_academique
   profiles:
-    active: ${SPRING_PROFILES_ACTIVE}
+    active: ${SPRING_PROFILES_ACTIVE:test}
 
 server:
   port: 8089

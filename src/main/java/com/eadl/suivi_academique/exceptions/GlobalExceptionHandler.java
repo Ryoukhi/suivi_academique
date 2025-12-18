@@ -1,18 +1,18 @@
-package com.eadl.suivi_academique.controllers.handler;
+package com.eadl.suivi_academique.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.eadl.suivi_academique.services.exceptions.affectationexception.AffectationNotFoundException;
-import com.eadl.suivi_academique.services.exceptions.coursexception.CoursNotFoundException;
-import com.eadl.suivi_academique.services.exceptions.coursexception.InvalidCoursException;
-import com.eadl.suivi_academique.services.exceptions.personnelexception.PersonnelNotFoundException;
-import com.eadl.suivi_academique.services.exceptions.programmationexception.ProgrammationNotFoundException;
-import com.eadl.suivi_academique.services.exceptions.salleexception.InvalidSalleException;
-import com.eadl.suivi_academique.services.exceptions.salleexception.SalleIndisponibleException;
-import com.eadl.suivi_academique.services.exceptions.salleexception.SalleNotFoundException;
+import com.eadl.suivi_academique.exceptions.affectationexception.AffectationNotFoundException;
+import com.eadl.suivi_academique.exceptions.coursexception.CoursNotFoundException;
+import com.eadl.suivi_academique.exceptions.coursexception.InvalidCoursException;
+import com.eadl.suivi_academique.exceptions.personnelexception.PersonnelNotFoundException;
+import com.eadl.suivi_academique.exceptions.programmationexception.ProgrammationNotFoundException;
+import com.eadl.suivi_academique.exceptions.salleexception.InvalidSalleException;
+import com.eadl.suivi_academique.exceptions.salleexception.SalleIndisponibleException;
+import com.eadl.suivi_academique.exceptions.salleexception.SalleNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

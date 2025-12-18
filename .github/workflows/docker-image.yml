@@ -30,7 +30,7 @@ jobs:
 
       # 3️⃣ Build Maven (sécurité + feedback rapide)
       - name: Build Spring Boot app
-        run: mvn clean package -DskipTests
+        run: mvn clean package
 
       # 4️⃣ Login Docker Hub
       - name: Login to Docker Hub
