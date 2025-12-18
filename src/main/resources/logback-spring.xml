@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- ========================================================= -->
+    <!--  PROPRIÉTÉS GÉNÉRALES                                    -->
+    <!-- ========================================================= -->
+    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n"/>
+
+    <!-- ========================================================= -->
+    <!--  APPENDER CONSOLE (DOCKER / TERMINAL)                     -->
+    <!-- ========================================================= -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================================================= -->
+    <!--  APPENDER TECHNIQUE (Spring, framework)                 -->
+    <!-- ========================================================= -->
+    <appender name="TECH_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/application-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================================================= -->
+    <!--  APPENDER MÉTIER                                          -->
+    <!-- ========================================================= -->
+    <appender name="BUSINESS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/business-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================================================= -->
+    <!--  APPENDER AUDIT UTILISATEUR                               -->
+    <!-- ========================================================= -->
+    <appender name="AUDIT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/user-activity-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================================================= -->
+    <!--  APPENDER ERREURS                                         -->
+    <!-- ========================================================= -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================================================= -->
+    <!--  LOGGER ROOT (technique, Spring Boot)                     -->
+    <!-- ========================================================= -->
+    <root level="INFO">
+        <!-- <appender-ref ref="CONSOLE"/> -->
+        <appender-ref ref="TECH_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+
+    <!-- ========================================================= -->
+    <!--  LOGGER MÉTIER (packages ciblés uniquement)              -->
+    <!-- ========================================================= -->
+    <logger name="com.eadl.suivi_academique.services"
+            level="INFO"
+            additivity="false">
+        <appender-ref ref="BUSINESS_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="com.eadl.suivi_academique.controller"
+            level="INFO"
+            additivity="false">
+        <appender-ref ref="BUSINESS_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="com.eadl.suivi_academique.domain"
+            level="INFO"
+            additivity="false">
+        <appender-ref ref="BUSINESS_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="com.eadl.suivi_academique"
+            level="INFO"
+            additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- ========================================================= -->
+    <!--  LOGGER AUDIT UTILISATEUR                                 -->
+    <!-- ========================================================= -->
+    <logger name="AUDIT"
+            level="INFO"
+            additivity="false">
+        <appender-ref ref="AUDIT_FILE"/>
+    </logger>
+
+    <!-- ========================================================= -->
+    <!--  SILENCE DES LOGS BRUYANTS                                 -->
+    <!-- ========================================================= -->
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.apache" level="WARN"/>
+    <logger name="org.jboss" level="WARN"/>
+    <logger name="org.springframework.boot.StartupInfoLogger" level="OFF"/>
+    <logger name="org.springframework.boot" level="WARN"/>
+
+</configuration>

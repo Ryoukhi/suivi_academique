@@ -1,0 +1,11 @@
+2025-12-16 16:18:56.344 INFO  - Tentative de suppression de la salle - code: S020 l'utilisateur "sucre"
+2025-12-16 16:18:56.351 WARN  - Suppression impossible - Salle non trouvée avec le code: S020
+2025-12-16 16:19:28.080 INFO  - Tentative de création d'une nouvelle salle par l'utilisateur "sucre" | ip: 0:0:0:0:0:0:0:1 | device: PostmanRuntime/7.37.3  - code: S078, libellé: Salle de licence
+2025-12-16 16:19:28.213 INFO  - Salle créée avec succès - code: S078, libellé: Salle de licence, contenance: 44, statut: LIBRE
+
+2025-12-16 16:55:09.286 INFO  - Starting SuiviAcademiqueApplication using Java 21.0.1 with PID 10144 (D:\EADL\GESTION VERSION\suivi_academique\target\classes started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-16 16:55:09.289 INFO  - No active profile set, falling back to 1 default profile: "default"
+2025-12-16 16:55:11.613 INFO  - Started SuiviAcademiqueApplication in 2.424 seconds (process running for 2905.415)
+2025-12-16 18:50:03.755 INFO  - Starting SuiviAcademiqueApplication using Java 21.0.1 with PID 9256 (D:\EADL\GESTION VERSION\suivi_academique\target\classes started by TOSHIBA PC in D:\EADL\GESTION VERSION\suivi_academique)
+2025-12-16 18:50:03.758 INFO  - No active profile set, falling back to 1 default profile: "default"
+2025-12-16 18:50:15.432 INFO  - Started SuiviAcademiqueApplication in 13.027 seconds (process running for 14.367)

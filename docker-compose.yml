@@ -1,0 +1,45 @@
+version: "3.8"
+
+services: 
+  suivi-academique:
+    build:
+      context: .           # Si le Dockerfile est à la racine, utilise "."
+      dockerfile: Dockerfile
+    image: suivi_api:latest
+    env_file:
+      - .env
+    ports:
+      - "8081:${SERVER_PORT}"
+    networks:
+      - sa-net
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/suivi_db?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user_name
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+
+    depends_on:
+      db:
+        condition: service_healthy 
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: suivi_db
+      MYSQL_USER: user_name 
+      MYSQL_PASSWORD: rootpassword
+    ports:
+      - "3308:3306"
+    networks:
+      - sa-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  sa-net:
+    driver: bridge
