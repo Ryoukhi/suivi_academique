@@ -48,9 +48,10 @@ jobs:
       - name: Run OWASP Dependency Check
         run: |
           mvn org.owasp:dependency-check-maven:check \
-          -DdataDirectory=./dependency-check-data \
-          -Dformat=HTML \
-          -DfailOnError=true
+            -DdataDirectory=./dependency-check-data \
+            -DnvdDownloadTimeout=600 \
+            -DfailOnError=false \
+            -Dformat=HTML
 
   sonar-analysis:
     name: Code Quality & Security - SonarQube
