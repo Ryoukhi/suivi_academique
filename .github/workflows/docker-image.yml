@@ -29,10 +29,52 @@ jobs:
 
       - name: Run Unit Tests
         run: mvn test
+        
+  dependency-scan:
+    name: Security - Dependency Scan
+    runs-on: ubuntu-latest
+    needs: test-unit
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run OWASP Dependency Check
+        run: mvn org.owasp:dependency-check-maven:check
+
+  sonar-analysis:
+    name: Code Quality & Security - SonarQube
+    runs-on: ubuntu-latest
+    needs: dependency-scan
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: SonarQube Scan
+        run: mvn verify sonar:sonar \
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+
   build-docker-image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    needs: test-unit
+    needs: sonar-analysis
 
     steps:
       # 1 Récupération du code
@@ -67,3 +109,37 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
             ${{ secrets.DOCKER_USERNAME }}/suivi_api:${{ github.sha }}
+  trivy-scan:
+    name: Container Security Scan - Trivy
+    runs-on: ubuntu-latest
+    needs: build-docker-image
+
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
+  zap-scan:
+    name: API Security Scan - OWASP ZAP
+    runs-on: ubuntu-latest
+    needs: trivy-scan
+
+    steps:
+      - name: Run container
+        run: |
+          docker run -d -p 8080:8080 --name suivi_api_test ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
+
+      - name: Wait for API to start
+        run: sleep 30
+
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: 'http://localhost:8080'
+
+      - name: Stop container
+        run: docker stop suivi_api_test
+
