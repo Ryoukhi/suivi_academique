@@ -149,22 +149,33 @@ jobs:
           exit-code: 1
           severity: CRITICAL,HIGH
   zap-scan:
-    name: API Security Scan - OWASP ZAP
+    name: OWASP ZAP API Scan
     runs-on: ubuntu-latest
-    needs: trivy-scan
+    needs: build-docker-image
 
     steps:
-      - name: Run container
+      - name: Start API container
         run: |
-          docker run -d -p 8080:8080 --name suivi_api_test ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
+          docker run -d --name api-scan -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
 
-      - name: Wait for API to start
-        run: sleep 30
+      - name: Wait for API to be ready
+        run: |
+          echo "Waiting for API..."
+          for i in {1..20}; do
+            curl -s http://localhost:8080 && break
+            echo "API not ready yet..."
+            sleep 5
+          done
 
-      - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.12.0
+      - name: Run OWASP ZAP Baseline Scan
+        run: |
+          docker run --rm \
+            -t owasp/zap2docker-stable zap-baseline.py \
+            -t http://localhost:8080 \
+            -r zap_report.html || true
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
         with:
-          target: 'http://localhost:8080'
-
-      - name: Stop container
-        run: docker stop suivi_api_test
+          name: zap-report
+          path: zap_report.html
