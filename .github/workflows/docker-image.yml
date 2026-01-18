@@ -78,7 +78,7 @@ jobs:
       - name: Run SonarQube Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn verify sonar:sonar \
+        run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar \
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
           -Dsonar.host.url=https://sonarcloud.io \
@@ -156,4 +156,3 @@ jobs:
 
       - name: Stop container
         run: docker stop suivi_api_test
-
