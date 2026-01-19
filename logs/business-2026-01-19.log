@@ -1,0 +1,8 @@
+2026-01-19 10:11:30.040 INFO  - Starting SalleControllerTest using Java 21.0.1 with PID 15184 (started by TOSHIBA PC in D:\EADL\SEMESTRE 1\GESTION VERSION\suivi_academique)
+2026-01-19 10:11:30.044 INFO  - The following 1 profile is active: "test"
+2026-01-19 10:11:36.015 INFO  - Started SalleControllerTest in 7.191 seconds (process running for 9.782)
+2026-01-19 10:11:37.448 INFO  - Tentative de création d'une nouvelle salle par l'utilisateur "admin" | ip: 127.0.0.1 | device: JUnit-Test  - code: null, libellé: Salle Informatique
+2026-01-19 10:11:37.452 ERROR - Création salle échouée - Code salle manquant
+2026-01-19 10:11:37.452 WARN  - Validation échouée lors de la création de la salle: Le code de la salle est obligatoire
+2026-01-19 10:11:37.484 INFO  - Tentative de création d'une nouvelle salle par l'utilisateur "admin" | ip: 127.0.0.1 | device: JUnit-Test  - code: S001, libellé: Salle Informatique
+2026-01-19 10:11:37.485 INFO  - Salle créée avec succès - code: S001, libellé: Salle Informatique, contenance: 30, statut: LIBRE
