@@ -149,35 +149,52 @@ jobs:
           exit-code: 1
           severity: CRITICAL,HIGH
   zap-scan:
-    name: OWASP ZAP API Scan
+    name: API Security Scan - OWASP ZAP
     runs-on: ubuntu-latest
-    needs: build-docker-image
+    needs: trivy-scan
 
     steps:
-      - name: Start API container
-        run: |
-          docker run -d --name api-scan -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Wait for API to be ready
-        run: |
-          echo "Waiting for API..."
-          for i in {1..20}; do
-            curl -s http://localhost:8080 && break
-            echo "API not ready yet..."
-            sleep 5
-          done
+      - name: Create Docker network
+        run: docker network create zap-network
 
-      - name: Run OWASP ZAP Baseline Scan
+      - name: Run container
+        run: |
+          docker run -d \
+            --network zap-network \
+            --name suivi_api_test \
+            -p 8080:8080 \
+            ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
+
+      - name: Wait for API to start
+        run: |
+          echo "Waiting for API to be ready..."
+          timeout 60 bash -c 'until curl -f http://localhost:8080/actuator/health 2>/dev/null; do sleep 2; done' || echo "Health check endpoint not available, continuing..."
+          sleep 10
+
+      - name: ZAP Baseline Scan
         run: |
           docker run --rm \
-            --network host \
-            -v $(pwd):/zap/wrk \
-            zaproxy/zap-stable zap-baseline.py \
-            -t http://localhost:8080 \
-            -r zap_report.html || true
+            --network zap-network \
+            -v $(pwd):/zap/wrk/:rw \
+            zaproxy/zap-stable:latest \
+            zap-baseline.py \
+            -t http://suivi_api_test:8080 \
+            -r zap-report.html \
+            -I || true
 
       - name: Upload ZAP Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: zap-report
-          path: zap_report.html
+          name: zap-scan-report
+          path: zap-report.html
+
+      - name: Stop and remove container
+        if: always()
+        run: |
+          docker stop suivi_api_test || true
+          docker rm suivi_api_test || true
+          docker network rm zap-network || true
