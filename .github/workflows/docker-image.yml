@@ -159,7 +159,7 @@ jobs:
 
       # === Créer un réseau Docker dédié pour ZAP et l'API ===
       - name: Create Docker network
-        run: docker network create zap-network || true
+        run: docker network create zap-network
 
       # === Démarrer l'API dans le réseau Docker ===
       - name: Run API container
@@ -170,12 +170,41 @@ jobs:
             -p 8080:8080 \
             ${{ secrets.DOCKER_USERNAME }}/suivi_api:latest
 
+      # === DIAGNOSTIC : Vérifier que l'API tourne ===
+      - name: Verify API container is running
+        run: |
+          echo "=== Docker containers ==="
+          docker ps -a
+          
+          echo ""
+          echo "=== API container logs ==="
+          docker logs suivi_api_test || echo "No logs available"
+          
+          echo ""
+          echo "=== Container inspect ==="
+          docker inspect suivi_api_test | grep -A 10 "State"
+          
+          echo ""
+          echo "=== Network inspect ==="
+          docker network inspect zap-network
+
       # === Attendre que l'API soit prête ===
       - name: Wait for API to start
         run: |
           echo "Waiting for API to be ready..."
-          timeout 60 bash -c 'until curl -f http://localhost:8080/actuator/health 2>/dev/null; do sleep 2; done' || echo "Health check endpoint not available, continuing..."
-          sleep 10
+          sleep 30
+          
+          echo "=== Testing localhost access ==="
+          curl -v http://localhost:8080 || echo "Failed to access via localhost"
+          
+          echo ""
+          echo "=== Testing from within network ==="
+          docker run --rm --network zap-network curlimages/curl:latest \
+            curl -v http://suivi_api_test:8080 || echo "Failed to access via container name"
+          
+          echo ""
+          echo "=== Final container status ==="
+          docker ps -a | grep suivi_api_test
 
       # === Créer un dossier dédié pour le rapport ===
       - name: Prepare ZAP output folder
@@ -203,11 +232,15 @@ jobs:
         with:
           name: zap-scan-report
           path: zap-output/zap-report.html
+          if-no-files-found: warn
 
       # === Stop et nettoyage des containers et réseau ===
-      - name: Stop and remove container & network
+      - name: Cleanup
         if: always()
         run: |
+          echo "=== Final logs before cleanup ==="
+          docker logs suivi_api_test || true
+          
           docker stop suivi_api_test || true
           docker rm suivi_api_test || true
           docker network rm zap-network || true
